@@ -1,0 +1,531 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    
+  
+      <link rel="apple-touch-icon" type="image/png" href="https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png">
+  
+      <meta name="apple-mobile-web-app-title" content="CodePen">
+  
+      <link rel="shortcut icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico">
+  
+      <link rel="mask-icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/logo-pin-b4b4269c16397ad2f0f7a01bcdf513a1994f4c94b8af2f191c09eb0d601762b1.svg" color="#111">
+  
+  
+  
+    
+      <script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-2c7831bb44f98c1391d6a4ffda0e1fd302503391ca806e7fcc7b9b87197aec26.js"></script>
+  
+  
+    <title>CodePen - Portfolio (new version)</title>
+  
+      <link rel="canonical" href="https://codepen.io/el-nachio/pen/vYvjzrw">
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css&quot;">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css">
+    
+  <style>
+  @import url("https://fonts.googleapis.com/css2?family=Itim&family=Montserrat&display=swap");
+  * {
+    margin: 0;
+    padding: 0;
+    font-family: "Itim", cursive;
+    font-family: "Montserrat", sans-serif;
+  }
+  
+  nav {
+    position: sticky;
+    top: 0px;
+    justify-content: flex-end;
+    align-items: center;
+    height: 10%;
+    background-color: #212529;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+  }
+  
+  .nav-link {
+    padding: 1rem;
+    font-weight: bold;
+    color: #ffffff;
+  }
+  
+  .nav-link:hover {
+    color: #f76c6c;
+  }
+  
+  .profile-photo {
+    position: absolute;
+    top: 50%;
+    left: 25%;
+    transform: translate(-25%, -75%);
+    border-radius: 50%;
+    width: 200px;
+  }
+  
+  #welcome-section {
+    height: 100vh;
+    background-image: url("https://i.pinimg.com/originals/15/1e/99/151e99f73bc7629406867e7f68dbf058.jpg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+  }
+  #welcome-section h1, #welcome-section p {
+    position: absolute;
+    top: 75%;
+    left: 20%;
+    transform: translate(-25%, -75%);
+    text-align: center;
+    color: #181717;
+  }
+  #welcome-section p {
+    top: 90%;
+    transform: translate(-15%, -60%);
+  }
+  
+  .project-fade {
+    opacity: 0;
+    transition: ease-in 0.4s;
+    transform: translate(-40vw);
+  }
+  
+  .project-fade-in {
+    opacity: 1;
+    transition: ease-out 0.4s;
+  }
+  
+  #projects {
+    height: 100vh;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+  }
+  #projects a {
+    position: relative;
+    width: 70vw;
+    margin: 1em 0;
+  }
+  #projects a .project-tile {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-size: 1.5em;
+    background: rgba(29, 106, 154, 0.72);
+    color: #fff;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.5s, visibility 0.5s;
+    margin: 1em 0;
+    border-radius: 10px 10px 0 0;
+  }
+  #projects a:hover .project-tile {
+    
+    visibility: visible;
+    opacity: 1;
+  }
+  #projects img {
+    width: 100%;
+  }
+  #projects i {
+    font-size: 2em;
+    border-radius: 50%;
+  }
+  
+  #contact p a {
+    display: inline;
+  }
+  
+  .contact {
+    height: 100vh;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: space-around;
+  }
+  .contact ul {
+    list-style-type: none;
+  }
+  .contact li {
+    display: flex;
+    align-items: flex-end;
+  }
+  .contact li p {
+    color: white;
+    font-size: 20px;
+  }
+  .contact li i {
+    margin: 0 5px;
+  }
+  .contact .contact-input input, .contact textarea {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #000000;
+    padding: 10px 0;
+    outline: none;
+    margin-bottom: 20px;
+  }
+  .contact .contact-form {
+    justify-content: center;
+    width: 40vw;
+    height: 80vh;
+    padding: 20px;
+  }
+  .contact .contact-form, .contact .contact-input {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .info-contact {
+    display: none;
+    background-color: #212529;
+    justify-content: space-between;
+    width: 60%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+    animation: fadeInUp 0.5s 0.5s forwards;
+    opacity: 0;
+  }
+  .info-contact ul li i {
+    font-size: xx-large;
+  }
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%);
+    }
+  }
+  
+  /******************************************footer**********************************************************/
+  .footer {
+    background-color: #212529;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+  }
+  
+  .footer-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .footer p {
+    margin: 0;
+    font-size: 16px;
+  }
+  
+  .social-icons {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 10px 0;
+  }
+  
+  .social-icons li {
+    display: inline;
+    margin: 0 10px;
+  }
+  
+  .social-icons a {
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+    transition: color 0.3s ease;
+  }
+  
+  .social-icons a:hover {
+    color: #007bff;
+  }
+  
+  /**********************************      media query      *******************************************/
+  @media (max-width: 1024px) {
+    .profile-photo {
+      left: 35%;
+      transform: translate(-25%, -75%);
+    }
+  
+    .nav-link {
+      padding: 0.5rem 0.5rem;
+    }
+  
+    #welcome-section h1, #welcome-section p {
+      transform: translate(-10%, -75%);
+    }
+  
+    #projects {
+      height: auto;
+    }
+    #projects img {
+      width: 100vw;
+      height: 50vh;
+    }
+    #projects i {
+      position: absolute !important;
+      z-index: 3;
+    }
+    #projects #right-button {
+      left: 80% !important;
+    }
+    #projects #left-button {
+      right: 80% !important;
+    }
+    #projects a {
+      width: 100%;
+    }
+  
+    .contact > div {
+      text-align: center;
+    }
+  
+    #contact-form {
+      width: 90vw;
+    }
+  
+    .info-contact {
+      width: 80vw;
+    }
+    .info-contact ul li i {
+      font-size: 2em;
+    }
+    .info-contact .copy-icon {
+      display: none;
+    }
+  }
+  </style>
+  
+    <script>
+    window.console = window.console || function(t) {};
+  </script>
+  
+    
+    
+  </head>
+  
+  <body translate="no" onload="window.scrollTo(0, 0)">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+      
+          <nav class="nav" id="navbar">
+              <a class="nav-link" href="#projects">Projects</a>
+              <a class="nav-link" href="#contact">Contact</a>
+              <a class="nav-link" target="_blank" id="profile-link" href="https://github.com/El-nachio">Github</a>
+              <a class="nav-link" target="_blank" id="profile-link" href="https://www.freecodecamp.org/Ignacio_Taborda">freecodecamp</a>
+          </nav>
+          <img class="profile-photo" src="https://master.d2qgreimgde9nm.amplifyapp.com/projects-pic/foto-cv.jpeg">
+          <div id="welcome-section">
+              <h1>Hello there I'm Ignacio Taborda, <br>web developer<br></h1>
+              <p>"Start where you are. Use what you have. Do what you can."</p>
+          </div>
+          <div id="projects">
+              <i class="bi bi-arrow-left-circle btn btn-primary" id="left-button" style="position: relative; right: 7%"></i>
+              <a class="project-tile" id="proyect-link" href="https://codepen.io/el-nachio/full/JjpEPZR">
+                  <p class="project-tile" id="description">This HTML code represents a personal web page for Taborda Ignacio, a Front-End Developer. The page includes sections for navigation, presentation, projects, and contact information.</p>
+                  <img src="projects-pic\Captura de pantalla 2023-08-22 202132.png" id="projetc-img" alt="Survey Form">
+              </a>
+              <i class="bi bi-arrow-right-circle btn btn-primary" id="right-button" style="position: relative; left: 7%"></i>
+          </div>
+          <div class="contact" id="contact">
+              <div>
+                  <h2>Lets talk about everything!&nbsp;</h2>
+                  <h3>Contact links&nbsp;<a href="#contact" id="links" onclick="handleClick()"><i class="bi bi-envelope-fill"></i></a></h3>
+              </div>
+              <section class="info-contact">
+                  <ul class="link-seccion">
+                      <li>
+                          <a class="nav-link" href="#contact">
+                              <i class="bi bi-envelope"></i>
+                          </a>
+                          <p>Email</p>
+                      </li>
+                      <li>
+                          <a class="nav-link" href="https://www.instagram.com/taborda__ignacio/">
+                              <i class="bi bi-instagram"></i>
+                          </a>
+                          <p>Instagram</p>
+                      </li>
+                      <li>
+                          <a class="nav-link" href="https://codepen.io/el-nachio">
+                              <i class="bi bi-code-slash"></i>
+                          </a>
+                          <p>Codepen</p>
+                      </li>
+                      <li>
+                          <a class="nav-link" href="https://www.freecodecamp.org/Ignacio_Taborda">
+                              <i class="bi bi-book"></i>
+                          </a>
+                          <p>Freecodecamp</p>
+                      </li>
+                      <li>
+                          <a class="nav-link" href="https://github.com/El-nachio">
+                              <i class="bi bi-github"></i>
+                          </a>
+                          <p>Github</p>
+                      </li>
+                      <li>
+                          <a class="nav-link" href="https://www.linkedin.com/in/ignacio-taborda-26a2b321b/">
+                              <i class="bi bi-linkedin"></i>
+                          </a>
+                          <p>LinkedIn</p>
+                      </li>
+                  </ul>
+                  <ul class="copy-icon">
+                      <li class="nav-link">
+                          <i class="bi bi-link-45deg"></i>
+                          <i class="bi bi-clipboard"></i>
+                      </li>
+                      <li class="nav-link">
+                          <i class="bi bi-link-45deg"></i>
+                          <i class="bi bi-clipboard"></i>
+                      </li>
+                      <li class="nav-link">
+                          <i class="bi bi-link-45deg"></i>
+                          <i class="bi bi-clipboard"></i>
+                      </li>
+                      <li class="nav-link">
+                          <i class="bi bi-link-45deg"></i>
+                          <i class="bi bi-clipboard"></i>
+                      </li>
+                      <li class="nav-link">
+                          <i class="bi bi-link-45deg"></i>
+                          <i class="bi bi-clipboard"></i>
+                      </li>
+                      <li class="nav-link">
+                          <i class="bi bi-link-45deg"></i>
+                          <i class="bi bi-clipboard"></i>
+                      </li>
+                  </ul>
+              </section>
+              <!-- para poder hacer que el formulario me envie un mail utilice la pagina abajo descipta es un codigo que me proporcionaron al verificar el email-->
+              <form id="contact-form" class="contact-form" action="https://formsubmit.co/464e3f62d5ac5f031c12df99769a1daf" method="POST">
+                  <div class="contact-input">
+                      <label>Name</label>
+                      <input type="text" id="input-name" name="name" required="">
+                  </div>
+                  <div class="contact-input">
+                      <label>Email</label>
+                      <input type="email" name="email" id="input-email" required="">
+                  </div>
+                  <div class="contact-input">
+                      <label>Message</label>
+                      <textarea id="message" name="textarea" required=""></textarea>
+                  </div>
+                  <input type="submit" name="input" class="btn btn-primary" id="contact-submit">
+              </form></div>
+          
+          <footer class="footer">
+              <div class="footer-content">
+                  <p>© 2023 Ignacio Taborda</p>
+                  <ul class="social-icons">
+                      <li><a href="https://github.com/El-nachio"><i class="bi bi-github"></i></a></li>
+                      <li><a href="https://www.linkedin.com/in/ignacio-taborda-26a2b321b/"><i class="bi bi-linkedin"></i></a></li>
+                      <li><a href="https://www.instagram.com/taborda__ignacio/"><i class="bi bi-instagram"></i></a></li>
+                  </ul>
+              </div>
+          </footer>
+          
+      
+    
+        <script id="rendered-js">
+  // funcion creada con chatgtp no sabia como encararla
+  document.addEventListener('DOMContentLoaded', function () {
+    const centeredSection = document.querySelector('.info-contact');
+    const showSectionButton = document.getElementById('links');
+  
+    function handleClick() {
+      centeredSection.classList.remove('none');
+      centeredSection.style.display = 'flex';
+    }
+  
+    // Agrega la función handleClick al objeto window para que pueda ser llamada desde el atributo onclick del botón
+    window.handleClick = handleClick;
+  
+    // Cierra la sección cuando se hace clic fuera de ella
+    document.addEventListener('click', event => {
+      if (!centeredSection.contains(event.target) && event.target !== showSectionButton) {
+        centeredSection.style.display = 'none';
+      }
+    });
+  
+    // Evita que el clic en el botón cierre la sección
+    showSectionButton.addEventListener('click', event => {
+      event.stopPropagation();
+    });
+  });
+  /**************************************************************here change the projects*****************************************************************************/
+  document.addEventListener('DOMContentLoaded', function () {
+    let hrefs = [
+    'https://codepen.io/el-nachio/full/JjpEPZR',
+    'https://codepen.io/el-nachio/full/YzJewWp',
+    'https://codepen.io/el-nachio/full/xxyQpLq',
+    'https://codepen.io/el-nachio/full/RwJQGOZ',
+    'https://codepen.io/el-nachio/full/poqomyV',
+    'https://codepen.io/el-nachio/full/xxayjjw'];
+  
+    let imgProy = [
+    'https://master.d2qgreimgde9nm.amplifyapp.com/projects-pic/Captura%20de%20pantalla%202023-08-22%20202132.png',
+    'https://master.d2qgreimgde9nm.amplifyapp.com/projects-pic/Captura%20de%20pantalla%202023-08-22%20202609.png',
+    'https://master.d2qgreimgde9nm.amplifyapp.com/projects-pic/Captura%20de%20pantalla%202023-08-22%20202634.png',
+    'https://master.d2qgreimgde9nm.amplifyapp.com/projects-pic/Captura%20de%20pantalla%202023-08-22%20202712.png',
+    'https://master.d2qgreimgde9nm.amplifyapp.com/projects-pic/Captura%20de%20pantalla%202023-08-23%20192141.png',
+    'https://master.d2qgreimgde9nm.amplifyapp.com/projects-pic/Captura%20de%20pantalla%202023-08-23%20192238.png'];
+  
+    let toChange = [
+    document.getElementById('proyect-link'),
+    document.getElementById('projetc-img'),
+    document.getElementById('description')];
+  
+    let descriptions = [
+    'This HTML code represents a personal web page for Taborda Ignacio, a Front-End Developer. The page includes sections for navigation, presentation, projects, and contact information.',
+    'This React-based app, called "Machine," displays random inspirational quotes and allows users to refresh the quote and change the background color. It also provides a Twitter share option.',
+    'The "Calculator" app is a user-friendly tool for performing basic math operations, including addition, subtraction, multiplication, and division. It also handles decimal input and offers a clear button (AC) for easy correction. The app is designed to provide real-time feedback and gracefully handle syntax errors. Its a handy tool for quick and accurate calculations.',
+    'This virtual keyboard is a user interface element designed to mimic the functionality of a physical keyboard. It provides a range of keys, including alphanumeric, function keys (F1-F12), control keys (CTRL, ALT), and special keys (TAB, BACKSPACE, CAPS, SHIFT, ENTER, SPACE, ESC). The keyboard is an essential component for input on various devices and applications, offering a convenient and intuitive way to interact with digital content.',
+    'The Pomodoro Timer is a web application designed to boost productivity through time management. It uses the Pomodoro Technique, breaking work into focused intervals and short breaks. Key features include customizable session and break durations, audio alerts, countdown displays, and responsive design. Created by web developer Ignacio Taborda, it helps users stay organized and motivated.',
+    'This HTML code represents an educational application that explores and teaches various branches of mathematics and the scientific method. The application is organized into sections that provide detailed information on topics such as algebra, calculus, arithmetic, logic, logic gates, and scientific models. Users can easily navigate through these topics using the navigation bar. Each section contains relevant educational content and useful links.'];
+  
+    let cont = 0;
+    function presentation() {
+      setTimeout(function () {
+        // Cambiar los elementos después de la eliminación de la animación
+        toChange[0].href = hrefs[cont];
+        toChange[1].src = imgProy[cont];
+        toChange[2].innerHTML = descriptions[cont];
+  
+        // Agregar una animación de aparición después de cambiar los elementos
+        toChange[0].classList.remove('project-fade');
+        toChange[0].classList.add('project-fade-in');
+  
+        // Usar setTimeout nuevamente para eliminar la clase de animación de aparición después de un tiempo
+        setTimeout(function () {
+          toChange[0].classList.remove('project-fade-in');
+        }, 500); // 500 ms, ajusta esto según la duración de tu animación CSS
+      }, 500); // 500 ms, ajusta esto según la duración de tu animación CSS
+    }
+    let leftButton = document.getElementById('left-button').addEventListener('click', function () {
+      if (cont < hrefs.length - 1) {
+        cont++;
+        toChange[0].classList.add('project-fade');
+        presentation();
+      }
+    });
+    let right = document.getElementById('right-button').addEventListener('click', function () {
+      if (cont > 0) {
+        cont--;
+        toChange[0].classList.add('project-fade');
+        presentation();
+      }
+    });
+  });
+  //# sourceURL=pen.js
+      </script>
+  
+    
+  
+  
+  
+  </body></html>
